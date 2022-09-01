@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      lang="en">
+<head>
+    <!--/*/ <th:block th:include="fragments/head :: head"></th:block> /*/-->
+    <title>Task Manager</title>
+</head>
+
+<body>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-info fixed-top">
+        <a class="navbar-brand mr-4" href="#">TotPro</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
+                aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav mr-auto">
+
+                <!--Home-->
+                <li th:class="${activeTab == 'home'}? 'active nav-item mr-4' : 'nav-item mr-4'">
+                    <a class="nav-link" href="/index"><i class="fas fa-home-lg">Home</i></a>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav">
+                <li th:class="${activeTab == 'register'}? 'active nav-item mr-4' : 'nav-item mr-4'"
+                    sec:authorize="!isAuthenticated()">
+                    <a class="nav-link" href="/register_user">Register</a>
+                </li>
+                <li   th:class="${activeTab == 'login'}? 'active nav-item mr-4' : 'nav-item mr-4'"
+                      sec:authorize="!isAuthenticated()">
+                    <a class="nav-link" href="/login">Login</a>
+                </li>
+                <li>
+<!--                    <form class="form-inline my-2 my-lg-0"-->
+<!--                          th:action="@{logout}" method="get"-->
+<!--                          sec:authorize="isAuthenticated()">-->
+<!--                        <button  class="btn btn-secondary my-2 my-sm-0 mr-4" type="submit">Logout</button>-->
+<!--                    </form>-->
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+
+</header>
+
+<main class="container">
+    <h1 class="display-4">Welcome to TotPro!</h1>
+    <p class="lead">This application will help you get stuff done</p>
+    <div class="container my-2">
+        <img src="images/todo2.jpeg" alt="todo photo" class="embed-responsive embed-responsive-3by4">
+    </div>
+</main>
+
+<footer class="footer">
+    <!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
+</footer>
+
+</body>
+</html>
