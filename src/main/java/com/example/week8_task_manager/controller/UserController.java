@@ -30,10 +30,16 @@ public class UserController {
 
 
     @GetMapping(value = "/dashboard")
-    public String UserDashboard(Model model){
-        List<Task> allTasks = userService.viewAllTasks();
-        model.addAttribute("listTasks", allTasks);
-        return "dashboard";
+    public String UserDashboard(Model model, HttpSession session){
+        if(session.getAttribute("id") == null){
+            return "redirect:/login";
+        }else {
+            List<Task> allTasks = userService.showTaskByUser((Long) session.getAttribute("id"));
+            model.addAttribute("listTasks", allTasks);
+            session.setAttribute("listTasks", allTasks);
+            return "dashboard";
+        }
+
     }
 
     @GetMapping(value = "/login")
@@ -76,11 +82,11 @@ public class UserController {
         }
     }
 
-    @GetMapping(value = "/task/{status}")
-    public String taskByStatus(@PathVariable(name = "status") String status , Model model){
-        List<Task> listOfTaskByStatus = userService.viewAllTaskByStatus(status);
-        model.addAttribute("tasksByStatus" , listOfTaskByStatus);
-        return "task-by-status";
+    @GetMapping("/task/{status}")
+    public String viewTaskByStatus(@PathVariable(name = "status") String status, Model model, HttpSession session){
+        List<Task> taskList = userService.viewAllTaskByStatus(status, (Long) session.getAttribute("id"));
+        model.addAttribute("task", taskList);
+        return "task_by_status";
     }
 
     @GetMapping("/delete/{id}")
@@ -134,8 +140,9 @@ public class UserController {
     }
 
     @GetMapping("/viewTask/{id}")
-    public String viewSingleTask(@PathVariable(name = "id") Long id){
-        userService.getTaskById(id);
+    public String viewSingleTask(@PathVariable(name = "id") Long id, Model model){
+        Task task = userService.getTaskById(id);
+        model.addAttribute("singleTask", task);
         return "viewSingleTask";
     }
 }

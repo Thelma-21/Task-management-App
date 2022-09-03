@@ -5,9 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.List;
 
-@Getter
-@Setter
-@ToString
+@Data
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor

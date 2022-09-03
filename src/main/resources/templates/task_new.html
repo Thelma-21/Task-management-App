@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
 <head>
     <!--/*/ <th:block th:include="fragments/head :: head"></th:block> /*/-->
     <title>Create New Task</title>
@@ -12,80 +12,80 @@
 <header>
     <!--/*/ <th:block th:include="fragments/header :: header('create-new-task')"></th:block> /*/-->
 </header>
+<div layout:fragment="content">
+    <main class="container">
+        <div class="card mb-3">
 
-<main class="container">
-    <div class="card mb-3">
+            <h1 class="my-highest-header card-header">Create new Task</h1>
 
-        <h1 class="my-highest-header card-header">Create new Task</h1>
+            <div class="card card-body">
+                <form th:action="@{/task_new}" th:object="${newTask}" method="post">
+                    <input type="hidden" th:value="${#session.getAttribute('id')}" name="user_id">
 
-        <div class="card card-body">
-            <form th:action="@{/task_new}" th:object="${newTask}" method="post">
-<!--                <input type="hidden" th:field="*{creatorName}"/>-->
-<!--                <input type="hidden" th:field="*{owner}"/>-->
 
-                <!--name-->
-                <div class="form-group">
-                    <label for="name" class="form-control-label">Task Title</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
+                    <!--name-->
+                    <div class="form-group">
+                        <label for="name" class="form-control-label">Task Title</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
                             <span class="input-group-text">
                                 <i class="fas fa-pen"></i>
                             </span>
+                            </div>
+                            <input type="text" class="form-control"
+                                   th:field="${newTask.title}" id="name" name="title"/>
                         </div>
-                        <input type="text" class="form-control"
-                               th:field="${newTask.title}" id="name" name="title"/>
+                        <!--                    <div class="text text-danger"-->
+                        <!--                         th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>-->
                     </div>
-<!--                    <div class="text text-danger"-->
-<!--                         th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>-->
-                </div>
 
-                <!--description-->
-                <div class="form-group">
-                    <label for="description" class="form-control-label">Task Description</label>
-                    <textarea class="form-control"
-                              th:field="${newTask.description}" id="description" name="description">  </textarea>
-<!--                    <div class="text text-danger"-->
-<!--                         th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>-->
-                </div>
+                    <!--description-->
+                    <div class="form-group">
+                        <label for="description" class="form-control-label">Task Description</label>
+                        <textarea class="form-control"
+                                  th:field="${newTask.description}" id="description" name="description">  </textarea>
+                        <!--                    <div class="text text-danger"-->
+                        <!--                         th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>-->
+                    </div>
 
 
-<!--                <div class="form-group">-->
-<!--                    <label for="description" class="form-control-label">Task Description</label>-->
-<!--                    <textarea class="form-control"-->
-<!--                              th:field="${newTask.status}" id="status" name="description">  </textarea>-->
-<!--                    &lt;!&ndash;                    <div class="text text-danger"&ndash;&gt;-->
-<!--                    &lt;!&ndash;                         th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>&ndash;&gt;-->
-<!--                </div>-->
-<!--                &lt;!&ndash;date&ndash;&gt;-->
-<!--                <div class="form-group">-->
-<!--                    <label for="date" class="form-control-label">Date</label>-->
-<!--                    <div class="input-group mb-3">-->
-<!--                        <div class="input-group-prepend">-->
-<!--                            <span class="input-group-text">-->
-<!--                                <i class="far fa-calendar-alt"></i>-->
-<!--                            </span>-->
-<!--                        </div>-->
-<!--                        <input type="date" class="form-control"-->
-<!--                               th:attr="value=${#dates.format(#dates.createNow(), 'yyyy-MM-dd')},-->
-<!--                                    min=${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"-->
-<!--                               th:field="*{date}" id="date"/>-->
-<!--                    </div>-->
+                    <!--                <div class="form-group">-->
+                    <!--                    <label for="description" class="form-control-label">Task Description</label>-->
+                    <!--                    <textarea class="form-control"-->
+                    <!--                              th:field="${newTask.status}" id="status" name="description">  </textarea>-->
+                    <!--                    &lt;!&ndash;                    <div class="text text-danger"&ndash;&gt;-->
+                    <!--                    &lt;!&ndash;                         th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>&ndash;&gt;-->
+                    <!--                </div>-->
+                    <!--                &lt;!&ndash;date&ndash;&gt;-->
+                    <!--                <div class="form-group">-->
+                    <!--                    <label for="date" class="form-control-label">Date</label>-->
+                    <!--                    <div class="input-group mb-3">-->
+                    <!--                        <div class="input-group-prepend">-->
+                    <!--                            <span class="input-group-text">-->
+                    <!--                                <i class="far fa-calendar-alt"></i>-->
+                    <!--                            </span>-->
+                    <!--                        </div>-->
+                    <!--                        <input type="date" class="form-control"-->
+                    <!--                               th:attr="value=${#dates.format(#dates.createNow(), 'yyyy-MM-dd')},-->
+                    <!--                                    min=${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"-->
+                    <!--                               th:field="*{date}" id="date"/>-->
+                    <!--                    </div>-->
 
-<!--                    <div class="text text-danger"-->
-<!--                         th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></div>-->
-<!--                </div>-->
-<!--                <input type="hidden" th:field="${newTask.status}" value="pending" >-->
+                    <!--                    <div class="text text-danger"-->
+                    <!--                         th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></div>-->
+                    <!--                </div>-->
+                    <!--                <input type="hidden" th:field="${newTask.status}" value="pending" >-->
 
-                <input type="submit" value="Submit" class="btn btn-info"/>
-            </form>
+                    <input type="submit" value="Submit" class="btn btn-info"/>
+                </form>
+            </div>
         </div>
-    </div>
-</main>
+    </main>
 
 
-<footer class="footer">
-    <!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
-</footer>
-
+    <footer class="footer">
+        <!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
+    </footer>
+</div>
 </body>
 </html>

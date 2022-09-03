@@ -2,6 +2,7 @@ package com.example.week8_task_manager.serviceImpl;
 
 import com.example.week8_task_manager.dto.TaskDto;
 import com.example.week8_task_manager.dto.UserDto;
+import com.example.week8_task_manager.model.Status;
 import com.example.week8_task_manager.model.Task;
 import com.example.week8_task_manager.model.User;
 import com.example.week8_task_manager.repository.TaskRepository;
@@ -48,13 +49,13 @@ class UserServiceImplTest {
         taskList = new ArrayList<>();
         taskList.add(task);
         this.user = new User(1L, "Thelma", "temzy@gmail.com", "samKay", taskList);
-        this.task = new Task(1L, "Practice algorithm","practice with codeWars for 5 hours", "pending", time, time, time, user);
-        this.taskDto = new TaskDto("Practice algorithm", "practice with codeWars for 5 hours");
+        this.task = new Task(1L, "Practice algorithm","practice with codeWars for 5 hours", Status.PENDING, time, time, time, user);
+        this.taskDto = new TaskDto("Practice algorithm", "practice with codeWars for 5 hours", 1L);
         this.userDto = new UserDto("Thelma", "temzy@gmail.com", "samKay");
         when(userRepository.save(user)).thenReturn(user);
         when(taskRepository.save(task)).thenReturn(task);
         when(taskRepository.findAll()).thenReturn(taskList);
-        when(taskRepository.listOfTasksByStatus("pending")).thenReturn(taskList);
+        when(taskRepository.listOfTasksByStatus("pending", 1L)).thenReturn(taskList);
         when(userRepository.findById(1L)).thenReturn(Optional.ofNullable(user));
         when(taskRepository.findById(1L)).thenReturn(Optional.ofNullable(task));
         when(userRepository.findUserByEmail("temzy@gmail.com")).thenReturn(Optional.of(user));
@@ -110,7 +111,7 @@ class UserServiceImplTest {
 
     @Test
     void viewAllTaskByStatus() {
-        assertEquals(taskList, userService.viewAllTaskByStatus("pending"));
+        assertEquals(taskList, userService.viewAllTaskByStatus("pending", 1L));
     }
 
     @Test

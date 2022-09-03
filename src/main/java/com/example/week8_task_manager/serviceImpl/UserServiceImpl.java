@@ -55,7 +55,18 @@ public class UserServiceImpl implements UserService {
         task.setTitle(taskDto.getTitle());
         task.setStatus(Status.PENDING);
         task.setDescription(taskDto.getDescription());
+        User loginUser = getUserById(taskDto.getUser_id());
+        task.setUser(loginUser);
         return taskRepository.save(task);
+    }
+    @Override
+    public User getUserById(Long id){
+        return userRepository.findById(id)
+                .orElseThrow(() -> new TaskNotFoundException( "User not found"));
+    }
+    @Override
+    public List<Task> showTaskByUser(Long id){
+        return taskRepository.listOfTasksByUserId(id);
     }
 
     @Override
@@ -83,8 +94,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Task> viewAllTaskByStatus(String status) {
-        return taskRepository.listOfTasksByStatus(status);
+    public List<Task> viewAllTaskByStatus(String status, Long user_id) {
+        return taskRepository.listOfTasksByStatus(status, user_id);
     }
 
     @Override

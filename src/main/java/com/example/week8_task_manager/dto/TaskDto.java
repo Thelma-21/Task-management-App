@@ -10,5 +10,5 @@ public class TaskDto {
 
     private String title;
     private String description;
-
+    private Long user_id;
 }

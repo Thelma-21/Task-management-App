@@ -15,6 +15,10 @@ public interface UserService {
 
     Task createTask(TaskDto taskDto);
 
+    User getUserById(Long id);
+
+    List<Task> showTaskByUser(Long id);
+
     Task updateTitleAndDescription(TaskDto taskDto , Long id);
 
     Task getTaskById(Long id);
@@ -23,7 +27,7 @@ public interface UserService {
 
     boolean updateTaskStatus(String status, Long id);
 
-    List<Task> viewAllTaskByStatus(String status);
+    List<Task> viewAllTaskByStatus(String status, Long user_id);
 
     boolean deleteById(Long id);
     User getUserByEmail(String email);
